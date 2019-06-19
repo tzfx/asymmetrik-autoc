@@ -1,4 +1,5 @@
 export default class AutocompleteProvider {
+
   /**
    * Instantiates the internal datastore.
    */
@@ -13,8 +14,9 @@ export default class AutocompleteProvider {
    * @returns an array of word - confidence tuples, ordered by confidence.
    */
   getWords(fragment) {
+    const startsWith = RegExp('^'+fragment, 'i');
     return [...this.data]
-    .filter((candidate) => candidate[0].startsWith(fragment))
+    .filter((candidate) => startsWith.test(candidate[0]))
     .sort((a, b) => {
       if (b[1] === a[1]) return 0;
       if (b[1] > a[1]) return 1;
@@ -28,7 +30,7 @@ export default class AutocompleteProvider {
    */
   train(passage) {
     if (passage !== null && typeof passage === 'string')
-      passage.toLowerCase().match(/[a-zA-Z]+/g)
+      passage.toLowerCase().match(/[a-zA-Z']+/g)
       .forEach(
         (word) => {
           if (this.data.has(word))

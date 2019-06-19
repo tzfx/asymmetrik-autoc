@@ -24,6 +24,7 @@
       }
     },
     methods: {
+      // Save training passage, submitting it to the autocomplete engine.
       save: function(input) {
         this.$autocomplete.train(input);
         this.submitted = true;

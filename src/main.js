@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 import AutocompleteProvider from './services/AutocompleteProvider'
 
+// Initialize fontawesome library.
 library.add(faUserSecret, faCheckCircle)
 
 Vue.component('font-awesome-icon', FontAwesomeIcon)

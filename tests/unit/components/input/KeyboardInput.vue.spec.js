@@ -7,7 +7,7 @@ const keyboardInput = shallowMount(KeyboardInput, {
   mocks: {
     $store: {
       state: () => {
-        output: ''
+        ''
       },
       commit: (key, value) => { return [key, value]; }
     },

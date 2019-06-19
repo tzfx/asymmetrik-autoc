@@ -12,7 +12,11 @@
       />
     </div>
     <div class='output centered'>
-      <textarea class='output centered' readonly v-model='this.$store.state.output' placeholder="Output will appear here."></textarea>
+      <textarea class='output centered'
+       readonly
+        v-model='this.$store.state.output'
+        placeholder="Output will appear here. Enter or space will submit from input. Tab will autocomplete with the most likely word."
+        ></textarea>
       <br />
       <button @click='clearout'>Clear</button>
     </div>
@@ -33,6 +37,7 @@
       }
     },
     methods: {
+      // Remove all output fom the store.
       clearout: function() {
         this.$store.commit('clearOutput');
       },
