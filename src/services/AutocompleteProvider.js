@@ -33,7 +33,7 @@ export default class AutocompleteProvider {
     // Care must be taken to prevent arbitrary regexp from matching,
     //  so we test to see if it's comprised of normal english letter options in order to decide what test to use.
     const isEnglish = REGEXP_ENGLISH.test(fragment);
-    return [...this.data]
+    return [...this.data.get(fragment[0])]
     .filter((candidate) => isEnglish ? RegExp('^'+fragment, 'i').test(candidate[0]) : candidate[0].startsWith(fragment))
     .sort(this.candidateSortFunction)
     .slice(0, this.returnLimit);
@@ -48,10 +48,15 @@ export default class AutocompleteProvider {
       passage.toLowerCase().split(REGEXP_WHITESPACE_AND_PUNCTUATION)
       .forEach(
         (word) => {
-          if (this.data.has(word))
-            this.data.set(word, this.data.get(word) + 1);
-          else
-            this.data.set(word, 1);
+          if (!this.data.has(word[0])) {
+            this.data.set(word[0], new Map());
+          } else {
+            let section = this.data.get(word[0]);
+            if (section.has(word))
+              section.set(word, section.get(word) + 1);
+            else
+              section.set(word, 1);
+          }
         }
       );
   }
