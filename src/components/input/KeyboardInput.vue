@@ -37,19 +37,29 @@
       }
     },
     methods: {
-      // Remove all output fom the store.
+      /**
+       * Requests the store to dump all it's accrued output.
+       */
       clearout: function() {
         this.$store.commit('clearOutput');
       },
-      // Autocomplete inside of the input box.
+      /**
+       * Autocompletes the input fragment with the candidate with the highest confidence and retrains the selected candidate.
+       *  Maintains capitalization of the fragment.
+       *  Can be called from the Candidate component through some event laddering.
+       * @param fragment Input fragment to attempt to complete.
+       */
       finish: function(fragment) {
         let words = this.$autocomplete.getWords(fragment);
-        if(words.length > 0) {
+        if (words.length > 0) {
           this.input = this.input.concat(words[0][0].slice(this.input.length));
           this.$refs.input.focus();
         }
       },
-      // Populate candidates with autocomplete guesses.
+      /**
+       * Queries the autocomplete engine with the fragment. Clears candidate list if the fragment is empty.
+       * @param fragment Input fragment to send.
+       */
       guess: function(fragment) {
         if (fragment === '') {
           this.$store.commit('clearCandidates');
@@ -57,7 +67,10 @@
           this.$store.commit('setCandidates',this.$autocomplete.getWords(fragment));
         }
       },
-      // Update the output box.
+      /**
+       * Send the input word to autocomplete engine for training, and request the store to add it to existing output.
+       * @param word Word to add to output.
+       */
       update: function(word) {
         if (word !== '' && word.trim().length > 0) {
           this.$autocomplete.train(word);

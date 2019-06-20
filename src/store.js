@@ -3,6 +3,9 @@ import Vuex from 'vuex'
 
 Vue.use(Vuex)
 
+/**
+ * Application-wide state storage.
+ */
 export default new Vuex.Store({
   state: {
     candidates: [],

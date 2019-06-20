@@ -18,6 +18,7 @@ Vue.config.productionTip = false
 // Create singleton service of our AutocompleteProvider.
 Vue.prototype.$autocomplete = new AutocompleteProvider();
 
+// Application initialization point.
 new Vue({
   store,
   render: h => h(App)

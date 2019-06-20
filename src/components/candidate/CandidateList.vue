@@ -10,7 +10,9 @@
 
 <script>
   import Candidate from './Candidate.vue'
-
+  /**
+   * Component displaying a list of individual candidates.
+   */
   export default {
     components: {
       Candidate

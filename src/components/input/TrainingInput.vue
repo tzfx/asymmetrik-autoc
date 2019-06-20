@@ -20,11 +20,16 @@
     data: function() {
       return {
         input: '',
+        // Without initializing submitted to 0 and strict checks on the template,
+        //  we run the risk of fadeOut getting added on page render. Nice.
         submitted: 0
       }
     },
     methods: {
-      // Save training passage, submitting it to the autocomplete engine.
+      /**
+       * Sends the input passage to the autocompletion engine trainer, reveals update icon, and clears input.
+       * @param input An arbitrary training string.
+       */
       save: function(input) {
         this.$autocomplete.train(input);
         this.submitted = true;
