@@ -10,17 +10,17 @@ describe('AutocompleteProvider Service', () => {
     let acp = new AutocompleteProvider();
     acp.train('aardvark baboon camel');
     expect(acp.data.size).to.be.equal(3);
+    expect(acp.data.get('a').get('aardvark')).to.be.equal(1);
   });
 
   it('should keep count of trained word frequency', () => {
     let acp = new AutocompleteProvider();
     acp.train('aardvark aardvark camel');
     expect(acp.data.size).to.be.equal(2);
-    expect(acp.data.get('aardvark')).to.be.equal(2);
-    expect(acp.data.get('camel')).to.be.equal(1);
+    expect(acp.data.get('a').get('aardvark')).to.be.equal(2);
+    expect(acp.data.get('c').get('camel')).to.be.equal(1);
     acp.train('camel donkey diploticus');
-    expect(acp.data.get('camel')).to.be.equal(2);
-    expect(acp.data.size).to.be.equal(4);
+    expect(acp.data.get('c').get('camel')).to.be.equal(2);
   });
 
   it('should give no guesses if untrained', () => {
