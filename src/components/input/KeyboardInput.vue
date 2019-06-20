@@ -44,14 +44,14 @@
       // Autocomplete inside of the input box.
       finish: function(fragment) {
         let words = this.$autocomplete.getWords(fragment);
-        if (words.length > 0) {
-          this.input = words[0][0];
+        if(words.length > 0) {
+          this.input = this.input.concat(words[0][0].slice(this.input.length));
           this.$refs.input.focus();
         }
       },
       // Populate candidates with autocomplete guesses.
       guess: function(fragment) {
-        if (fragment === "") {
+        if (fragment === '') {
           this.$store.commit('clearCandidates');
         } else {
           this.$store.commit('setCandidates',this.$autocomplete.getWords(fragment));
@@ -59,7 +59,7 @@
       },
       // Update the output box.
       update: function(word) {
-        if (word.match(/[a-zA-Z]+/).length > 0) {
+        if (word !== '' && word.trim().length > 0) {
           this.$autocomplete.train(word);
           this.$store.commit('updateOutput', word);
           this.$store.commit('clearCandidates');

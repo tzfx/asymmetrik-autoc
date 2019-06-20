@@ -28,6 +28,20 @@ describe('AutocompleteProvider Service', () => {
     expect(acp.getWords('sadness')).to.be.empty;
   })
 
+  it('should respect return limit', () => {
+    let acp = new AutocompleteProvider(4);
+    acp.train('hey horton how hungry have you been?')
+    expect(acp.getWords('h').length).to.be.equal(4);
+  });
+
+  it('should learn symbols, but split on traditional punctuation', () => {
+    let acp = new AutocompleteProvider();
+    acp.train('n1c3 n#(3 nope,nada& nil');
+    let out = acp.getWords('n');
+    expect(out.length).to.be.equal(5);
+    expect(out.map(v => v[0])).to.have.members(['n1c3', 'n#(3', 'nope', 'nada&', 'nil']);
+  })
+
   it('should give ranked autocomplete guesses', () => {
     let acp = new AutocompleteProvider();
     acp.train('ant anteater antlion');
@@ -46,6 +60,7 @@ describe('AutocompleteProvider Service', () => {
     let out = acp.getWords('thi');
     let expected = [['thing', 2], ['think', 1], ['third', 1], ['this', 1]];
     expect(out[0]).to.have.members(expected[0]);
+    expect(out.map(v => v[0])).to.have.members(expected.map(v=>v[0]));
     expect(out.length).to.be.equal(expected.length);
   })
 
@@ -55,6 +70,7 @@ describe('AutocompleteProvider Service', () => {
     let out = acp.getWords('nee');
     let expected = [['need', 1]];
     expect(out[0]).to.have.members(expected[0]);
+    expect(out.map(v => v[0])).to.have.members(expected.map(v=>v[0]));
     expect(out.length).to.be.equal(expected.length);
   })
 
@@ -65,6 +81,7 @@ describe('AutocompleteProvider Service', () => {
     let expected = [['thing', 2], ['that', 2], ['think', 1], ['third', 1], ['this', 1], ['the', 1], ['thoroughly', 1] ];
     expect(out[0]).to.have.members(expected[0]);
     expect(out[1]).to.have.members(expected[1]);
+    expect(out.map(v => v[0])).to.have.members(expected.map(v=>v[0]));
     expect(out.length).to.be.equal(expected.length);
   })
 

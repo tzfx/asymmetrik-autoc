@@ -29,4 +29,10 @@ describe('KeyboardInput.vue', () => {
     expect(keyboardInput.vm.input).to.be.equal('neatish');
   });
 
+  it('should preserve case of a fragment when autocompleted', () => {
+    keyboardInput.vm.input = 'Neat';
+    keyboardInput.vm.finish(keyboardInput.vm.input);
+    expect(keyboardInput.vm.input).to.be.equal('Neatish');
+  })
+
 })
